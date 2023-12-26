@@ -3,7 +3,7 @@ pipeline {
 
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('arsgoo-dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('anastaasiill-dockerhub')
     }
     stages {
         stage('Check scm') {
@@ -28,8 +28,8 @@ pipeline {
             steps {
                 sh 'apk add --update python3 py-pip'
                 sh 'pip install xmlrunner'
-                sh 'cp Lab3/pawnshop_tests.py .'
-                sh 'python3 Lab3/pawnshop_tests.py'
+                sh 'cp testapp.py .'
+                sh 'python3 testapp.py'
             }
             post {
                 always {
@@ -45,8 +45,8 @@ pipeline {
         }
         stage('Image creation') {
             steps {
-                sh 'cp Lab3/Dockerfile .'
-                sh 'docker build -t arsgoo/pawnshop_tests:latest .'
+                sh 'cp Dockerfile .'
+                sh 'docker build -t anastaasiill/testapp:latest .'
             }
         }
         stage('Login') {
@@ -56,7 +56,7 @@ pipeline {
         }
         stage('Push') {
             steps {
-                sh 'docker push arsgoo/pawnshop_tests:latest'
+                sh 'docker push anastaasiill/testapp:latest'
             }
         }
     }
